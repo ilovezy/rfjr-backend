@@ -72,6 +72,11 @@
             {{rechargeStatus[scope.row.status] || scope.row.status}}
           </template>
         </el-table-column>
+        <el-table-column
+          prop='remark'
+          label="备注"
+          width='180'>
+        </el-table-column>
 
         <el-table-column
           min-width='120'

@@ -63,6 +63,10 @@
           prop='createAt'
           label="创建时间"
           width='180'>
+        </el-table-column>   <el-table-column
+          prop='remark'
+          label="备注"
+          width='180'>
         </el-table-column>
 
         <el-table-column
@@ -79,7 +83,7 @@
           label="操作">
           <template slot-scope="scope">
             <el-button size="mini"
-                       v-if='scope.row.status != "cancel"'
+                       v-if='scope.row.status == "wait"'
                        @click='openResetPwdDialog(scope.row)'>
               提现确认
             </el-button>
