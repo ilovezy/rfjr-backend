@@ -79,7 +79,7 @@
           label="操作">
           <template slot-scope="scope">
             <el-button size="mini"
-                       v-if='scope.row.status != "cancel"'
+                       v-if='scope.row.status == "wait"'
                        @click='openResetPwdDialog(scope.row)'>
               充值确认
             </el-button>
