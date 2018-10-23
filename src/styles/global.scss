@@ -1,0 +1,78 @@
+@import './variables.scss';
+@import "./mixin";
+[v-cloak] {
+  display: none;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  font-size: 0;
+  display: inline-block;
+}
+
+.text-primary {
+  color: #409EFF;
+}
+
+.text-success {
+  color: #67C23A;
+}
+
+.text-warning {
+  color: #E6A23C;
+}
+
+.text-danger {
+  color: #F56C6C;
+}
+
+.text-info {
+  color: #909399;
+}
+
+.text-main {
+  color: #303133;
+}
+
+.text-normal {
+  color: #606266;
+}
+
+.text-sub {
+  color: #909399;
+}
+
+.text-placeholder {
+  color: #C0C4CC;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.operate-bar {
+  padding: 15px;
+  border: 1px solid $border-color;
+}
+
+.main-table-wrap {
+  padding: 15px;
+  padding-bottom: 50px;
+  background: #fff;
+  box-shadow:0px 2px 12px 0px rgba(0,0,0,0.06);
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin: 0;
+  margin-bottom: 0.67em;
+}

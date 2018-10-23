@@ -1,0 +1,104 @@
+// 数字输入框
+
+.el-input-number .el-input__inner {
+  text-align: left;
+}
+
+// table 按钮链接边距修正
+.el-table .cell {
+  a + a,
+  a + .el-button,
+  .el-button + a {
+    margin-left: 10px;
+  }
+}
+
+// 图片上传预览 picture 形式
+.spe-multiple-drag {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  .el-upload-dragger {
+    height: 150px !important;
+    line-height: 150px;
+    margin-right: 20px;
+    .el-icon-plus {
+      font-size: 40px;
+    }
+  }
+
+  .el-upload-list--picture {
+    display: block;
+    align-items: center;
+    .el-upload-list__item {
+      height: 150px;
+      display: inline-block;
+      width: 250px;
+      margin-right: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+      overflow: hidden;
+
+      .el-upload-list__item-thumbnail {
+        width: 100px;
+        height: 100px;
+      }
+      .el-upload-list__item-name {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.spe-upload {
+  display: inline-block;
+  height: 150px;
+  width: 150px;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  line-height: 150px;
+  text-align: center;
+  font-size: 25px;
+
+  .el-upload.el-upload--text {
+    width: 100%;
+  }
+}
+
+// 图片上传预览 picture card形式
+.spe-multiple-drag-card {
+  .el-upload-list__item {
+    position: relative;
+
+    .el-upload-list__item-thumbnail {
+      height: auto !important;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .el-upload--picture-card {
+    width: 360px;
+    border: 0px !important;
+
+    .el-upload-dragger {
+      height: 148px !important;
+    }
+  }
+}
+
+
+.input-num-withAppend {
+  width: 100%;
+
+  .el-input-group--append {
+    display: inline-table;
+    .el-input__inner {
+      text-align: left;
+    }
+    .el-input-group__append {
+      display: table-cell;
+    }
+  }
+}
