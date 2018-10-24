@@ -30,15 +30,19 @@
         v-loading="listLoading">
         <el-table-column
           prop='accountStart'
-          label="accountStart"
+          label="开始号段"
           width='160'>
         </el-table-column>
         <el-table-column
           prop='accountEnd'
-          label="accountEnd"
+          label="结束号段"
           width='160'>
         </el-table-column>
-
+        <el-table-column
+          prop='accountIndex'
+          label="下一个号段"
+          width='160'>
+        </el-table-column>
         <el-table-column
           prop='name'
           label="昵称"

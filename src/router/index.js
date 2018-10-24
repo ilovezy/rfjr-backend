@@ -47,12 +47,12 @@ export const constantRouterMap = [
 export const asyncRouterMap = [
   ...UserManage,
   ...FinanceManage,
-  ...BorrowManage,
-  ...OpeManage,
-  ...DataStatistics,
-  ...Setting,
-  ...YeePayManage,
-  ...BaiscRouter,
+  // ...BorrowManage,
+  // ...OpeManage,
+  // ...DataStatistics,
+  // ...Setting,
+  // ...YeePayManage,
+  // ...BaiscRouter,
 ]
 
 export default new Router({
