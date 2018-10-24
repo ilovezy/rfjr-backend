@@ -66,7 +66,7 @@
         </el-table-column>
 
         <el-table-column
-          min-width='120'
+          min-width='500'
           fixed="right"
           label="操作">
           <template slot-scope="scope">
@@ -100,7 +100,13 @@
                        type='success'
                        v-if='scope.row.status != "cancel"'
                        @click='openSetAccountDialog(scope.row)'>
-              设置期货账户
+              手动开户
+            </el-button>
+
+            <el-button size="mini"
+                       v-if='scope.row.status != "cancel"'
+                       @click='openSetRuleDialog(scope.row)'>
+              添加开户规则
             </el-button>
           </template>
         </el-table-column>
@@ -154,6 +160,28 @@
       </span>
     </el-dialog>
 
+    <el-dialog
+      title="添加开户规则"
+      :visible.sync="ruleDialogVisible"
+      width="30%">
+      <el-form ref="form"
+               label-width="120px">
+        <el-form-item label="开始号段">
+          <el-input-number v-model="accountStart"
+                           controls-position="right"></el-input-number>
+        </el-form-item>
+        <el-form-item label="结束号段">
+          <el-input-number v-model="accountEnd"
+                           controls-position="right"></el-input-number>
+        </el-form-item>
+      </el-form>
+      <span slot="footer"
+            class="dialog-footer">
+        <el-button @click="closeRuleDialog">取 消</el-button>
+        <el-button type="primary"
+                   @click="confirmRuleDialog">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -185,6 +213,11 @@
         accountDialogVisible: false,
         currentAccountId: '',
         newAccount: '',
+
+        ruleDialogVisible: false,
+        currentRuleId: '',
+        accountStart: '',
+        accountEnd: ''
       }
     },
 
@@ -194,6 +227,48 @@
 
     methods: {
       formatDate,
+      openSetRuleDialog(row) {
+        this.ruleDialogVisible = true
+        this.currentRuleId = row.id
+      },
+
+      confirmRuleDialog() {
+        if (this.accountStart && this.accountEnd) {
+          if (this.accountEnd > this.accountStart) {
+
+            AXIOS.post('/backend/inviter/config/account/save', {
+              memberId: this.currentRuleId,
+              accountStart: this.accountStart,
+              accountEnd: this.accountEnd
+            }).then(res => {
+              this.$message({
+                type: 'success',
+                message: '开户规则设置成功!'
+              })
+              this.closeRuleDialog()
+              this.getList()
+            })
+          } else {
+            this.$message({
+              type: 'warning',
+              message: '结束号段必须大于开始号段'
+            })
+          }
+
+        } else {
+          this.$message({
+            type: 'warning',
+            message: '请设置开始，结束号段'
+          })
+        }
+      },
+
+      closeRuleDialog() {
+        this.ruleDialogVisible = false
+        this.currentRuleId = ''
+        this.accountStart = ''
+        this.accountEnd = ''
+      },
 
       openSetAccountDialog(row) {
         this.accountDialogVisible = true

@@ -19,6 +19,14 @@ export default [
         title: '会员列表',
         roles: ['admin'] // or you can only set roles in sub nav
       }
+    },{
+      path: 'InviteManage',
+      component: () => import('@/views/userManage/InviteManage'),
+      name: 'InviteManage',
+      meta: {
+        title: '代理管理',
+        roles: ['admin'] // or you can only set roles in sub nav
+      }
     },
     //   {
     //   path: 'LoanAccessAudit',
