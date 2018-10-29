@@ -1,68 +1,37 @@
 let USER = {
   setToken(str) {
-    localStorage.setItem('token', str)
+    localStorage.setItem('rfjr-backend-token', str)
   },
   getToken() {
-    return localStorage.getItem('token')
+    return localStorage.getItem('rfjr-backend-token')
   },
   setUserType(str){
-    localStorage.setItem('userType', str)
+    localStorage.setItem('rfjr-backend-userType', str)
   },
   getUserType() {
-    return localStorage.getItem('userType')
+    return localStorage.getItem('rfjr-backend-userType')
   },
   isLogin() {
-    return !!localStorage.getItem('token')
+    return !!localStorage.getItem('rfjr-backend-token')
   },
   setLoginName(str) {
-    localStorage.setItem('loginName', str)
+    localStorage.setItem('rfjr-backend-loginName', str)
   },
 
   getLoginName() {
-    return localStorage.getItem('loginName')
+    return localStorage.getItem('rfjr-backend-loginName')
   },
 
-  setPassword(str) {
-    localStorage.setItem('password', str)
-  },
-  getPassword() {
-    return localStorage.getItem('password')
-  },
-
-  setHebaoCode(str) {
-    localStorage.setItem('hebaoCode', str)
-  },
-
-  getHebaoCode() {
-    return localStorage.getItem('hebaoCode')
-  },
-
-  removeHebaoCode(){
-    localStorage.removeItem('hebaoCode')
-  },
-
-  setSelectProductTab(str){
-    localStorage.setItem('selectProductTab', str)
-  },
-
-  getSelectProductTab(){
-    return localStorage.getItem('selectProductTab')
-  },
-  removeSelectProductTab(){
-     localStorage.removeItem('selectProductTab')
-  },
   setPermissions(arr){
-    localStorage.setItem('permissonList', JSON.stringify(arr))
+    localStorage.setItem('rfjr-backend-permissonList', JSON.stringify(arr))
   },
   getPermissions(){
-    return JSON.parse(localStorage.getItem('permissonList'))
+    return JSON.parse(localStorage.getItem('rfjr-backend-permissonList'))
   },
   logout() {
-    localStorage.removeItem('token')
-    localStorage.removeItem('loginName')
-    localStorage.removeItem('password')
-    localStorage.removeItem('hebaoCode')
-    localStorage.removeItem('permissonList')
+    localStorage.removeItem('rfjr-backend-token')
+    localStorage.removeItem('rfjr-backend-loginName')
+    localStorage.removeItem('rfjr-backend-permissonList')
   }
 }
 
