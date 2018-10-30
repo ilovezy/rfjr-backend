@@ -84,45 +84,11 @@
           fixed="right"
           label="操作">
           <template slot-scope="scope">
-            <el-button size='mini'
-                       type='primary'
-                       v-permission='["platform:account:user:freeze"]'
-                       @click="handleToggleFreeze(scope.$index, scope.row, scope.row.status == 'freeze')"
-                       v-if='scope.row.status != "freeze" && scope.row.status != "cancel"'>冻结
-            </el-button>
-            <el-button size='mini'
-                       type='warning'
-                       v-permission='["platform:account:user:unfreeze"]'
-                       @click="handleToggleFreeze(scope.$index, scope.row, scope.row.status == 'freeze')"
-                       v-if='scope.row.status == "freeze" && scope.row.status != "cancel"'>解冻
-            </el-button>
-
-            <el-button
-              v-permission='["platform:account:user:cancel"]'
-              v-if='scope.row.status != "cancel"'
-              size="mini"
-              type="danger"
-              @click="handleCancel(scope.$index, scope.row)">注销
-            </el-button>
-
-            <el-button size="mini"
-                       type='success'
-                       v-if='scope.row.status != "cancel"'
-                       @click='openSetAccountDialog(scope.row)'>
-              手动开户
-            </el-button>
-
-            <el-button size="mini"
-                       v-if='scope.row.status != "cancel"'
-                       @click='openSetRuleDialog(scope.row)'>
-              添加开户规则
-            </el-button>
-
             <el-button size="mini"
                        type='info'
                        v-if='scope.row.status != "cancel"'
                        @click='openInfoDialog(scope.row)'>
-              查看银行卡信息
+              详情
             </el-button>
           </template>
         </el-table-column>
@@ -186,7 +152,7 @@
     <el-dialog
       title="个人信息"
       :visible.sync="infoVisible"
-      width="60%">
+      width="40%">
       <div>昵称: {{info.name}}</div>
       <div>总金额: $ {{info.balance}}</div>
       <div>可用金额: $ {{info.availableBalance}}</div>
@@ -229,6 +195,39 @@
         </div>
         <div v-else>未开通银行卡</div>
       </div>
+
+      <div class='action-bar' style='margin-top: 30px;'>
+        <el-button size='mini'
+                   type='primary'
+                   @click="handleToggleFreeze(currentStatus == 'freeze')"
+                   v-if='currentStatus != "freeze" && currentStatus != "cancel"'>冻结
+        </el-button>
+        <el-button size='mini'
+                   type='warning'
+                   @click="handleToggleFreeze(currentStatus == 'freeze')"
+                   v-if='currentStatus == "freeze" && currentStatus != "cancel"'>解冻
+        </el-button>
+
+        <el-button
+          v-if='currentStatus != "cancel"'
+          size="mini"
+          type="danger"
+          @click="handleCancel">注销
+        </el-button>
+
+        <el-button size="mini"
+                   v-if='currentStatus != "cancel"'
+                   @click='openSetRuleDialog()'>
+          添加开户规则
+        </el-button>
+
+        <el-button size="mini"
+                   type='success'
+                   v-if='currentStatus != "cancel"'
+                   @click='openSetAccountDialog'>
+          手动开户
+        </el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -265,9 +264,10 @@
         accountStart: '',
         accountEnd: '',
 
-
         infoVisible: false,
-        info: {}
+        info: {},
+        currentStatus: '',
+        currentInfoId: '',
       }
     },
 
@@ -278,6 +278,8 @@
     methods: {
       formatDate,
       openInfoDialog(row) {
+        this.currentStatus = row.status
+        this.currentInfoId = row.id
         AXIOS.post('/backend/member/center', {
           memberId: row.id,
         }).then(res => {
@@ -286,17 +288,23 @@
         })
       },
 
-      openSetRuleDialog(row) {
+      closeInfoDialog(){
+        this.currentStatus = ''
+        this.currentInfoId = ''
+        this.info = {}
+        this.infoVisible = false
+        this.getList()
+      },
+
+      openSetRuleDialog() {
         this.ruleDialogVisible = true
-        this.currentRuleId = row.id
       },
 
       confirmRuleDialog() {
         if (this.accountStart && this.accountEnd) {
           if (this.accountEnd > this.accountStart) {
-
             AXIOS.post('/backend/inviter/config/account/save', {
-              memberId: this.currentRuleId,
+              memberId: this.currentInfoId,
               accountStart: this.accountStart,
               accountEnd: this.accountEnd
             }).then(res => {
@@ -305,7 +313,7 @@
                 message: '开户规则设置成功!'
               })
               this.closeRuleDialog()
-              this.getList()
+              this.closeInfoDialog()
             })
           } else {
             this.$message({
@@ -329,15 +337,14 @@
         this.accountEnd = ''
       },
 
-      openSetAccountDialog(row) {
+      openSetAccountDialog() {
         this.accountDialogVisible = true
-        this.currentAccountId = row.id
       },
 
       confirmAccountDialog() {
         if (this.newAccount) {
           AXIOS.post('/backend/member/setAccount', {
-            memberId: this.currentAccountId,
+            memberId: this.currentInfoId,
             account: this.newAccount
           }).then(res => {
             this.$message({
@@ -345,7 +352,7 @@
               message: '期货账户修改成功!'
             })
             this.closeAccountDialog()
-            this.getList()
+            this.closeInfoDialog()
           })
         } else {
           this.$message({
@@ -361,36 +368,36 @@
         this.newAccount = ''
       },
 
-      handleCancel(index, row) {
+      handleCancel() {
         this.$confirm('确定注销？', {
           type: 'error'
         }).then(() => {
           AXIOS.post('/backend/member/cancel', {
-            memberId: row.id
+            memberId: this.currentInfoId
           }).then(res => {
             this.$message({
               type: 'success',
               message: '注销成功!'
             })
-            this.getList()
+            this.closeInfoDialog()
           })
         })
       },
 
-      handleToggleFreeze(index, row, freeze) {
+      handleToggleFreeze(freeze) {
         const tip = freeze ? '解冻' : '冻结'
         const url = freeze ? '/backend/member/unfreeze' : '/backend/member/freeze'
         this.$confirm('确定' + tip + '该用户吗？', {
           type: 'warning'
         }).then(() => {
           AXIOS.post(url, {
-            memberId: row.id
+            memberId: this.currentInfoId
           }).then(res => {
             this.$message({
               type: 'success',
               message: tip + '成功!'
             })
-            this.getList()
+            this.closeInfoDialog()
           })
         })
       },
