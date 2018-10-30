@@ -47,7 +47,7 @@
         </el-table-column>
         <el-table-column
           prop='amount'
-          label="充值金额(元)"
+          label="充值金额($)"
           width='200'>
         </el-table-column>
 

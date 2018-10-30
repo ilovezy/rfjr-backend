@@ -47,23 +47,16 @@
         </el-table-column>
         <el-table-column
           prop='amount'
-          label="充值金额(元)"
+          label="提现金额($)"
           width='200'>
-        </el-table-column>
-
-        <el-table-column
-          label="充值方式"
-          width='200'>
-          <template slot-scope="scope">
-            {{rechargeWay[scope.row.type] || scope.row.type}}
-          </template>
         </el-table-column>
 
         <el-table-column
           prop='createAt'
           label="创建时间"
           width='180'>
-        </el-table-column>   <el-table-column
+        </el-table-column>
+        <el-table-column
           prop='remark'
           label="备注"
           width='180'>
