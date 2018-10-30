@@ -39,7 +39,7 @@
           <div class='text'>今日确认入金金额</div>
           <div class='number'>
             <count-to :start-val="0"
-                      decimals='2'
+                      :decimals='2'
                       :end-val="successRechargeAmount"
                       :duration="duration"
                       prefix='$ '
@@ -62,7 +62,7 @@
           <div class='text'>今日确认出金金额</div>
           <div class='number'>
             <count-to :start-val="0"
-                      decimals='2'
+                      :decimals='2'
                       :end-val="successWithdrawAmount"
                       :duration="duration"
                       prefix='$ '
