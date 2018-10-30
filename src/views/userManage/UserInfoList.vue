@@ -123,23 +123,6 @@
 
     <el-dialog
       title="提示"
-      :visible.sync="passwordDialogVisible"
-      width="30%">
-      <el-input
-        placeholder="请输入新密码"
-        v-model="newPwd"
-        clearable>
-      </el-input>
-      <span slot="footer"
-            class="dialog-footer">
-        <el-button @click="closePasswordDialog">取 消</el-button>
-        <el-button type="primary"
-                   @click="confirmPasswordDialog">确 定</el-button>
-      </span>
-    </el-dialog>
-
-    <el-dialog
-      title="提示"
       :visible.sync="accountDialogVisible"
       width="30%">
       <el-input
