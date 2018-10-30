@@ -83,8 +83,12 @@ instance.interceptors.response.use(res => {
     }
   } else {
     Message.error({
-      message: '网络有点卡，请稍后重试'
+      message: '登录信息过期，请登录'
     })
+    USER.logout()
+    setTimeout(() => {
+      location.href = '/backend/#/login'
+    }, 2000)
     return Promise.reject(err)
   }
 })
