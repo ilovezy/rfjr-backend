@@ -27,6 +27,14 @@ export default [
         title: '代理管理',
         roles: ['admin'] // or you can only set roles in sub nav
       }
+    },{
+      path: 'ForgetPwdList',
+      component: () => import('@/views/userManage/ForgetPwdList'),
+      name: 'ForgetPwdList',
+      meta: {
+        title: '忘记密码管理',
+        roles: ['admin'] // or you can only set roles in sub nav
+      }
     },
     //   {
     //   path: 'LoanAccessAudit',

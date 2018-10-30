@@ -92,11 +92,6 @@
             </el-button>
 
             <el-button size="mini"
-                       v-if='scope.row.status != "cancel"'
-                       @click='openResetPwdDialog(scope.row)'>
-              重设密码
-            </el-button>
-            <el-button size="mini"
                        type='success'
                        v-if='scope.row.status != "cancel"'
                        @click='openSetAccountDialog(scope.row)'>
@@ -206,10 +201,6 @@
           cancel: '注销'
         },
 
-        passwordDialogVisible: false,
-        currentPwdId: '',
-        newPwd: '',
-
         accountDialogVisible: false,
         currentAccountId: '',
         newAccount: '',
@@ -300,38 +291,6 @@
         this.accountDialogVisible = false
         this.currentAccountId = ''
         this.newAccount = ''
-      },
-
-      openResetPwdDialog(row) {
-        this.passwordDialogVisible = true
-        this.currentPwdId = row.id
-      },
-
-      confirmPasswordDialog() {
-        if (isValidPassword(this.newPwd)) {
-          AXIOS.post('/backend/member/resetPassword', {
-            memberId: this.currentPwdId,
-            newPassword: this.newPwd
-          }).then(res => {
-            this.$message({
-              type: 'success',
-              message: '密码修改成功!'
-            })
-            this.closePasswordDialog()
-            this.getList()
-          })
-        } else {
-          this.$message({
-            type: 'warning',
-            message: '密码需在6-16位之间!'
-          })
-        }
-      },
-
-      closePasswordDialog() {
-        this.passwordDialogVisible = false
-        this.currentPwdId = ''
-        this.newPwd = ''
       },
 
       handleCancel(index, row) {
