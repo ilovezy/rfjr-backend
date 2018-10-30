@@ -2,12 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import BaiscRouter from './modules/basicRoute'
 import UserManage from './modules/userManage'
-import BorrowManage from './modules/borrowManage'
-import OpeManage from './modules/opeManage'
 import FinanceManage from './modules/financeManage'
-import DataStatistics from './modules/dataStatistics'
-import Setting from './modules/setting'
-import YeePayManage from './modules/yeePayManage'
 
 Vue.use(Router)
 
@@ -47,12 +42,6 @@ export const constantRouterMap = [
 export const asyncRouterMap = [
   ...UserManage,
   ...FinanceManage,
-  // ...BorrowManage,
-  // ...OpeManage,
-  // ...DataStatistics,
-  // ...Setting,
-  // ...YeePayManage,
-  // ...BaiscRouter,
 ]
 
 export default new Router({
