@@ -31,7 +31,7 @@
         <el-table-column
           prop='account'
           label="期货账户"
-          width='160'>
+          width='120'>
         </el-table-column>
 
         <el-table-column
@@ -43,12 +43,12 @@
         <el-table-column
           prop='trueName'
           label="真实姓名"
-          width='160'>
+          width='120'>
         </el-table-column>
         <el-table-column
           prop='amount'
           label="提现金额($)"
-          width='200'>
+          width='120'>
         </el-table-column>
 
         <el-table-column
@@ -56,18 +56,18 @@
           label="创建时间"
           width='180'>
         </el-table-column>
-        <el-table-column
-          prop='remark'
-          label="备注"
-          width='180'>
-        </el-table-column>
 
         <el-table-column
           label="状态"
-          width='180'>
+          width='120'>
           <template slot-scope="scope">
             {{rechargeStatus[scope.row.status] || scope.row.status}}
           </template>
+        </el-table-column>
+
+        <el-table-column
+          prop='remark'
+          label="备注">
         </el-table-column>
 
         <el-table-column
@@ -79,6 +79,13 @@
                        v-if='scope.row.status == "wait"'
                        @click='openResetPwdDialog(scope.row)'>
               提现确认
+            </el-button>
+
+            <el-button size="mini"
+                       type='warning'
+                       v-if='scope.row.status == "wait"'
+                       @click='openCancelDialog(scope.row)'>
+              确认不通过
             </el-button>
           </template>
         </el-table-column>
@@ -98,6 +105,22 @@
       </div>
     </div>
 
+    <el-dialog
+      title="确认不通过"
+      :visible.sync="cancelVisible"
+      width="30%">
+      <el-input
+        placeholder="备注"
+        v-model="cancelRemark"
+        clearable>
+      </el-input>
+      <span slot="footer"
+            class="dialog-footer">
+        <el-button @click="closeCancelDialog">取 消</el-button>
+        <el-button type="primary"
+                   @click="confirmCancelDialog">确 定</el-button>
+      </span>
+    </el-dialog>
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -149,6 +172,11 @@
         currentMemberId: '',
         currentLogId: '',
         remark: '',
+
+        cancelVisible: false,
+        cancelMemberId: false,
+        cancelId: false,
+        cancelRemark: '',
       }
     },
 
@@ -158,7 +186,31 @@
 
     methods: {
       formatDate,
-
+      openCancelDialog(row) {
+        this.cancelVisible = true
+        this.cancelMemberId = row.memberId
+        this.cancelId = row.id
+      },
+      confirmCancelDialog() {
+        AXIOS.post('/backend/withdraw/fail', {
+          memberId: this.cancelMemberId,
+          logId: this.cancelId,
+          remark: this.cancelRemark
+        }).then(res => {
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          })
+          this.closeCancelDialog()
+          this.getList()
+        })
+      },
+      closeCancelDialog() {
+        this.cancelVisible = false
+        this.cancelMemberId = ''
+        this.cancelId = ''
+        this.cancelRemark = ''
+      },
       openResetPwdDialog(row) {
         this.dialogVisible = true
         this.currentMemberId = row.memberId
