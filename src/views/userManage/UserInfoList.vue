@@ -80,7 +80,7 @@
         </el-table-column>
 
         <el-table-column
-          min-width='500'
+          min-width='120'
           fixed="right"
           label="操作">
           <template slot-scope="scope">
