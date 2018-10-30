@@ -80,15 +80,21 @@
         </el-table-column>
 
         <el-table-column
-          min-width='120'
+          min-width='210'
           fixed="right"
           label="操作">
           <template slot-scope="scope">
             <el-button size="mini"
-                       type='info'
+                       type='primary'
                        v-if='scope.row.status != "cancel"'
                        @click='openInfoDialog(scope.row)'>
               详情
+            </el-button>
+            <el-button size="mini"
+                       type='info'
+                       v-if='scope.row.status != "cancel" && scope.row.inviterFlag'
+                       @click='openInviteListDialog(scope.row.id)'>
+              邀请人列表
             </el-button>
           </template>
         </el-table-column>
@@ -107,6 +113,47 @@
         </el-pagination>
       </div>
     </div>
+    <el-dialog
+      title="邀请人列表"
+      :visible.sync="inviteVisible"
+      width="900px">
+      <div class='el-alert--info' v-if='inviteList.length > 0' style='padding: 15px;'>
+        共邀请 <span style='color: orangered'>{{inviteList.length}}</span>人
+      </div>
+      <el-table
+        :data="inviteList"
+        tooltip-effect="dark"
+        style="width: 100%;"
+        max-height='500'>
+        <el-table-column
+          prop='account'
+          label="期货账户"
+          width='120'>
+        </el-table-column>
+
+        <el-table-column
+          prop='name'
+          label="昵称"
+          width='140'>
+        </el-table-column>
+
+        <el-table-column
+          prop='trueName'
+          label="真实姓名"
+          width='120'>
+        </el-table-column>
+        <el-table-column
+          prop='identityNo'
+          label="身份证号码"
+          width='200'>
+        </el-table-column>
+
+        <el-table-column
+          prop='createAt'
+          label="创建时间">
+        </el-table-column>
+      </el-table>
+    </el-dialog>
 
     <el-dialog
       title="提示"
@@ -147,7 +194,6 @@
                    @click="confirmRuleDialog">确 定</el-button>
       </span>
     </el-dialog>
-
 
     <el-dialog
       title="个人信息"
@@ -196,7 +242,8 @@
         <div v-else>未开通银行卡</div>
       </div>
 
-      <div class='action-bar' style='margin-top: 30px;'>
+      <div class='action-bar'
+           style='margin-top: 30px;'>
         <el-button size='mini'
                    type='primary'
                    @click="handleToggleFreeze(currentStatus == 'freeze')"
@@ -268,6 +315,9 @@
         info: {},
         currentStatus: '',
         currentInfoId: '',
+
+        inviteList: [],
+        inviteVisible: false,
       }
     },
 
@@ -277,6 +327,15 @@
 
     methods: {
       formatDate,
+      openInviteListDialog(id) {
+        AXIOS.post('/backend/member/inviteList', {
+          memberId: id,
+        }).then(res => {
+          this.inviteList = isLongArr(res) ? res : []
+          this.inviteVisible = true
+        })
+      },
+
       openInfoDialog(row) {
         this.currentStatus = row.status
         this.currentInfoId = row.id
@@ -288,7 +347,7 @@
         })
       },
 
-      closeInfoDialog(){
+      closeInfoDialog() {
         this.currentStatus = ''
         this.currentInfoId = ''
         this.info = {}

@@ -78,6 +78,11 @@
               type="danger"
               @click="handleDelete(scope.$index, scope.row)">删除
             </el-button>
+
+            <el-button
+              size="mini"
+              @click="handleShowLink(scope.row.memberId)">查看推广链接
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -95,6 +100,19 @@
         </el-pagination>
       </div>
     </div>
+
+
+    <el-dialog
+      title="推广链接"
+      :visible.sync="showLink"
+      width="700px">
+      <div style='font-size: 18px;margin-bottom: 20px;'>
+        web推广链接： {{webLink}}
+      </div>
+      <div style='font-size: 18px;margin-bottom: 20px;'>
+        h5推广链接： {{h5Link}}
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -119,6 +137,10 @@
           normal: '正常',
           cancel: '注销'
         },
+
+        showLink: false,
+        webLink: '',
+        h5Link: '',
       }
     },
 
@@ -128,7 +150,11 @@
 
     methods: {
       formatDate,
-
+      handleShowLink(id){
+        this.showLink = true
+        this.webLink = location.origin + '/web/#/register?inviteId=' + id
+        this.h5Link =  location.origin + '/h5/#/register?inviteId=' + id
+      },
       handleDelete(index, row) {
         this.$confirm('确定删除？', {
           type: 'error'
