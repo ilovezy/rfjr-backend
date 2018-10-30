@@ -36,23 +36,6 @@ export default [
         roles: ['admin'] // or you can only set roles in sub nav
       }
     },
-    //   {
-    //   path: 'LoanAccessAudit',
-    //   component: () => import('@/views/userManage/LoanAccessAudit'),
-    //   name: 'LoanAccessAudit',
-    //   meta: {
-    //     title: '借款准入审核',
-    //     roles: ['admin'] // or you can only set roles in sub nav
-    //   }
-    // }, {
-    //   path: 'BankCardManage',
-    //   component: () => import('@/views/userManage/BankCardManage'),
-    //   name: 'BankCardManage',
-    //   meta: {
-    //     title: '银行卡管理',
-    //     roles: ['admin'] // or you can only set roles in sub nav
-    //   }
-    // },
     ]
   }
 

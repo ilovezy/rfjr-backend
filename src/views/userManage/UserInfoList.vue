@@ -103,6 +103,13 @@
                        @click='openSetRuleDialog(scope.row)'>
               添加开户规则
             </el-button>
+
+            <el-button size="mini"
+                       type='info'
+                       v-if='scope.row.status != "cancel"'
+                       @click='openInfoDialog(scope.row)'>
+              查看银行卡信息
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -160,6 +167,55 @@
                    @click="confirmRuleDialog">确 定</el-button>
       </span>
     </el-dialog>
+
+
+    <el-dialog
+      title="个人信息"
+      :visible.sync="infoVisible"
+      width="60%">
+      <div>昵称: {{info.name}}</div>
+      <div>总金额: $ {{info.balance}}</div>
+      <div>可用金额: $ {{info.availableBalance}}</div>
+
+      <div style='padding: 15px;background: #f7f7f7; margin-top: 15px;'>
+        <div v-if='info.realNameFlag'
+             class='spe'>
+          <svg-icon icon-class="yes"/>
+          <div>
+            <div>真实姓名: {{info.trueName}}</div>
+            <div>身份证号: {{info.identityNo}}</div>
+          </div>
+        </div>
+        <div v-else>
+          未实名认证
+        </div>
+      </div>
+
+      <div style='padding: 15px;background: #f7f7f7; margin-top: 15px;'>
+        <div v-if='info.openAccountFlag'
+             class='spe'>
+          <svg-icon icon-class="yes"/>
+          <div>期货账户: {{info.account}}</div>
+        </div>
+        <div v-else>
+          未开通期货账户
+        </div>
+      </div>
+
+      <div style='padding: 15px;background: #f7f7f7; margin-top: 15px;'>
+        <div v-if='info.bindCardFlag'
+             class='spe'>
+          <svg-icon icon-class="yes"/>
+          <div>
+            <div>银行名称：{{info.cardBankName}}</div>
+            <div>支行名称：{{info.cardBankBranch}}</div>
+            <div>开户地址：{{info.cardAddress}}</div>
+            <div>开户银行卡号：{{info.cardNo}}</div>
+          </div>
+        </div>
+        <div v-else>未开通银行卡</div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -191,7 +247,11 @@
         ruleDialogVisible: false,
         currentRuleId: '',
         accountStart: '',
-        accountEnd: ''
+        accountEnd: '',
+
+
+        infoVisible: false,
+        info: {}
       }
     },
 
@@ -201,6 +261,15 @@
 
     methods: {
       formatDate,
+      openInfoDialog(row) {
+        AXIOS.post('/backend/member/center', {
+          memberId: row.id,
+        }).then(res => {
+          this.info = res || {}
+          this.infoVisible = true
+        })
+      },
+
       openSetRuleDialog(row) {
         this.ruleDialogVisible = true
         this.currentRuleId = row.id
@@ -358,5 +427,20 @@
 
 <style lang="scss"
        scoped>
-
+  .spe {
+    display: flex;
+    align-items: center;
+    .svg-icon {
+      color: #fff;
+      background: green;
+      border-radius: 50px;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      display: inline-block;
+      margin-right: 20px;
+      font-size: 20px;
+      padding: 10px;
+    }
+  }
 </style>
