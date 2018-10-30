@@ -1,25 +1,39 @@
 <template>
   <div class="app-container">
-    <!--<div class='search-bar'>-->
-    <!--<div class='title-bar'>-->
-    <!--<div class='title'>检索条件</div>-->
-    <!--<div class='btn-wrap'>-->
-    <!--<el-button type="primary"-->
-    <!--@click='doSearch'>查询-->
-    <!--</el-button>-->
-    <!--<el-button @click='resetQuery'>重置</el-button>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class='search-control'>-->
-    <!--<el-form :inline="true"-->
-    <!--class="demo-form-inline">-->
-    <!--<el-form-item label="真实姓名">-->
-    <!--<el-input v-model="listQuery.trueName"-->
-    <!--placeholder="真实姓名"></el-input>-->
-    <!--</el-form-item>-->
-    <!--</el-form>-->
-    <!--</div>-->
-    <!--</div>-->
+    <div class='search-bar'>
+      <div class='title-bar'>
+        <div class='title'>检索条件</div>
+        <div class='btn-wrap'>
+          <el-button type="primary"
+                     @click='doSearch'>查询
+          </el-button>
+          <el-button @click='resetQuery'>重置</el-button>
+        </div>
+      </div>
+      <div class='search-control'>
+        <el-form :inline="true"
+                 class="demo-form-inline">
+          <el-form-item label="昵称">
+            <el-input v-model="listQuery.name"
+                      placeholder="昵称"></el-input>
+          </el-form-item>
+        </el-form>
+        <el-form :inline="true"
+                 class="demo-form-inline">
+          <el-form-item label="真实姓名">
+            <el-input v-model="listQuery.trueName"
+                      placeholder="真实姓名"></el-input>
+          </el-form-item>
+        </el-form>
+        <el-form :inline="true"
+                 class="demo-form-inline">
+          <el-form-item label="期货账户">
+            <el-input v-model="listQuery.account"
+                      placeholder="期货账户"></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
 
     <div class='main-table-wrap'>
       <el-table
@@ -230,7 +244,9 @@
         listQuery: {
           page: 0,
           size: 10,
+          name: '',
           trueName: '',
+          account: '',
         },
 
         formLabelWidth: '80px',

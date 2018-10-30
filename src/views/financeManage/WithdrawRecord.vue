@@ -71,7 +71,7 @@
         </el-table-column>
 
         <el-table-column
-          min-width='120'
+          min-width='240'
           fixed="right"
           label="操作">
           <template slot-scope="scope">
