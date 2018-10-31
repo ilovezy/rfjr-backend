@@ -200,8 +200,6 @@
       :visible.sync="infoVisible"
       width="40%">
       <div>昵称: {{info.name}}</div>
-      <div>总金额: $ {{info.balance}}</div>
-      <div>可用金额: $ {{info.availableBalance}}</div>
 
       <div style='padding: 15px;background: #f7f7f7; margin-top: 15px;'>
         <div v-if='info.realNameFlag'
