@@ -31,7 +31,7 @@
         v-loading="listLoading">
         <el-table-column
           prop='account'
-          label="期货账户"
+          label="交易账号"
           width='120'>
         </el-table-column>
 

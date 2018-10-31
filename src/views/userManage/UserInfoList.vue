@@ -27,9 +27,9 @@
         </el-form>
         <el-form :inline="true"
                  class="demo-form-inline">
-          <el-form-item label="期货账户">
+          <el-form-item label="交易账号">
             <el-input v-model="listQuery.account"
-                      placeholder="期货账户"></el-input>
+                      placeholder="交易账号"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -44,7 +44,7 @@
         v-loading="listLoading">
         <el-table-column
           prop='account'
-          label="期货账户"
+          label="交易账号"
           width='160'>
         </el-table-column>
 
@@ -127,7 +127,7 @@
         max-height='500'>
         <el-table-column
           prop='account'
-          label="期货账户"
+          label="交易账号"
           width='120'>
         </el-table-column>
 
@@ -160,7 +160,7 @@
       :visible.sync="accountDialogVisible"
       width="30%">
       <el-input
-        placeholder="请输入期货账户"
+        placeholder="请输入交易账号"
         v-model="newAccount"
         clearable>
       </el-input>
@@ -221,10 +221,10 @@
         <div v-if='info.openAccountFlag'
              class='spe'>
           <svg-icon icon-class="yes"/>
-          <div>期货账户: {{info.account}}</div>
+          <div>交易账号: {{info.account}}</div>
         </div>
         <div v-else>
-          未开通期货账户
+          未开通交易账号
         </div>
       </div>
 
@@ -408,7 +408,7 @@
           }).then(res => {
             this.$message({
               type: 'success',
-              message: '期货账户修改成功!'
+              message: '交易账号修改成功!'
             })
             this.closeAccountDialog()
             this.closeInfoDialog()

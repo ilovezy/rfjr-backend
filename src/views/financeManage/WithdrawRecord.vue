@@ -27,9 +27,9 @@
         </el-form>
         <el-form :inline="true"
                  class="demo-form-inline">
-          <el-form-item label="期货账户">
+          <el-form-item label="交易账号">
             <el-input v-model="listQuery.account"
-                      placeholder="期货账户"></el-input>
+                      placeholder="交易账号"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -44,7 +44,7 @@
         v-loading="listLoading">
         <el-table-column
           prop='account'
-          label="期货账户"
+          label="交易账号"
           width='120'>
         </el-table-column>
 
