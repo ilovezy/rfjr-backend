@@ -86,7 +86,7 @@
 
             <el-button
               size="mini"
-              @click="handleShowLink(scope.row.memberId)">查看推广链接
+              @click="handleShowLink(scope.row.memberId)">查看开户链接
             </el-button>
           </template>
         </el-table-column>
@@ -108,14 +108,14 @@
 
 
     <el-dialog
-      title="推广链接"
+      title="开户链接"
       :visible.sync="showLink"
       width="700px">
       <div style='font-size: 18px;margin-bottom: 20px;'>
-        web推广链接： {{webLink}}
+        电脑开户链接： {{webLink}}
       </div>
       <div style='font-size: 18px;margin-bottom: 20px;'>
-        h5推广链接： {{h5Link}}
+        手机开户链接： {{h5Link}}
       </div>
     </el-dialog>
   </div>
