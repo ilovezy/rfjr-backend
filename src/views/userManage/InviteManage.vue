@@ -46,6 +46,11 @@
           label="真实姓名"
           width='160'>
         </el-table-column>
+        <el-table-column
+          prop='memberId'
+          label="邀请码"
+          width='160'>
+        </el-table-column>
 
         <el-table-column
           prop='accountStart'
@@ -150,10 +155,10 @@
 
     methods: {
       formatDate,
-      handleShowLink(id){
+      handleShowLink(id) {
         this.showLink = true
         this.webLink = location.origin + '/web/#/register?inviteId=' + id
-        this.h5Link =  location.origin + '/h5/#/register?inviteId=' + id
+        this.h5Link = location.origin + '/h5/#/register?inviteId=' + id
       },
       handleDelete(index, row) {
         this.$confirm('确定删除？', {
