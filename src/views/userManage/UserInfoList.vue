@@ -64,6 +64,11 @@
           label="身份证号码"
           width='200'>
         </el-table-column>
+        <el-table-column
+          prop='referral'
+          label='推荐码'
+          width='120'>
+        </el-table-column>
 
         <el-table-column
           prop='createAt'
@@ -147,7 +152,6 @@
           label="身份证号码"
           width='200'>
         </el-table-column>
-
         <el-table-column
           prop='createAt'
           label="创建时间">
