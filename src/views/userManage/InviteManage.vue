@@ -157,8 +157,8 @@
       formatDate,
       handleShowLink(id) {
         this.showLink = true
-        this.webLink = location.origin + '/web/#/register?inviteId=' + id
-        this.h5Link = location.origin + '/h5/#/register?inviteId=' + id
+        this.webLink = 'http://www.rfqhuo.com/web/#/register?inviteId=' + id
+        this.h5Link = 'http://www.rfqhuo.com/h5/#/register?inviteId=' + id
       },
       handleDelete(index, row) {
         this.$confirm('确定删除？', {
