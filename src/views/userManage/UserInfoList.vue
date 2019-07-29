@@ -65,6 +65,11 @@
           width='200'>
         </el-table-column>
         <el-table-column
+          prop='exRate'
+          label="费率"
+          width='200'>
+        </el-table-column>
+        <el-table-column
           prop='referral'
           label='推荐码'
           width='120'>
@@ -166,6 +171,13 @@
       <el-input
         placeholder="请输入交易账号"
         v-model="newAccount"
+        clearable>
+      </el-input>
+      <br>
+      <br>
+      <el-input
+        placeholder="请输入费率"
+        v-model="newExRate"
         clearable>
       </el-input>
       <span slot="footer"
@@ -307,6 +319,7 @@
         accountDialogVisible: false,
         currentAccountId: '',
         newAccount: '',
+        newExRate: '',
 
         ruleDialogVisible: false,
         currentRuleId: '',
@@ -406,7 +419,8 @@
         if (this.newAccount) {
           AXIOS.post('/backend/member/setAccount', {
             memberId: this.currentInfoId,
-            account: this.newAccount
+            account: this.newAccount,
+            exRate: this.newExRate
           }).then(res => {
             this.$message({
               type: 'success',
@@ -418,7 +432,7 @@
         } else {
           this.$message({
             type: 'warning',
-            message: '密码需在6-16位之间!'
+            message: '请选择一个账户'
           })
         }
       },
@@ -427,6 +441,7 @@
         this.accountDialogVisible = false
         this.currentAccountId = ''
         this.newAccount = ''
+        this.newExRate = ''
       },
 
       handleCancel() {
