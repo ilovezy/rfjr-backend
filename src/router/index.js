@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import BaiscRouter from './modules/basicRoute'
 import UserManage from './modules/userManage'
 import FinanceManage from './modules/financeManage'
+import Setting from './modules/setting'
 
 Vue.use(Router)
 
@@ -70,6 +71,7 @@ export const constantRouterMap = [
 export const asyncRouterMap = [
   ...UserManage,
   ...FinanceManage,
+  ...Setting,
   // ...BaiscRouter,
 ]
 
