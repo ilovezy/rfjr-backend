@@ -127,7 +127,9 @@
       title="邀请人列表"
       :visible.sync="inviteVisible"
       width="900px">
-      <div class='el-alert--info' v-if='inviteList.length > 0' style='padding: 15px;'>
+      <div class='el-alert--info'
+           v-if='inviteList.length > 0'
+           style='padding: 15px;'>
         共邀请 <span style='color: orangered'>{{inviteList.length}}</span>人
       </div>
       <el-table
@@ -185,6 +187,30 @@
         <el-button @click="closeAccountDialog">取 消</el-button>
         <el-button type="primary"
                    @click="confirmAccountDialog">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog
+      title="修改真实姓名和身份证"
+      :visible.sync="resetIdVisible"
+      width="30%">
+      <el-input
+        placeholder="请输入真实姓名"
+        v-model="currentTrueName"
+        clearable>
+      </el-input>
+      <br>
+      <br>
+      <el-input
+        placeholder="请输入身份证号"
+        v-model="currentIdentityNo"
+        clearable>
+      </el-input>
+      <span slot="footer"
+            class="dialog-footer">
+        <el-button @click="closeResetIdDialog">取 消</el-button>
+        <el-button type="primary"
+                   @click="confirmResetIdDialog">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -288,6 +314,13 @@
                    @click='openSetAccountDialog'>
           手动开户
         </el-button>
+
+        <el-button size="mini"
+                   type='warning'
+                   v-if='currentStatus != "cancel"'
+                   @click='openResetIdDialog'>
+          修改真实信息
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -333,6 +366,10 @@
 
         inviteList: [],
         inviteVisible: false,
+
+        currentTrueName: '',
+        currentIdentityNo: '',
+        resetIdVisible: false
       }
     },
 
@@ -342,6 +379,53 @@
 
     methods: {
       formatDate,
+
+      openResetIdDialog(row) {
+        this.currentTrueName = this.info.trueName
+        this.currentIdentityNo = this.info.identityNo
+        this.resetIdVisible = true
+      },
+
+      closeResetIdDialog() {
+        this.resetIdVisible = false
+      },
+
+      validIdNo(str) {
+        const reg = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/
+        return reg.test(str)
+      },
+
+      confirmResetIdDialog() {
+        if (!this.currentTrueName) {
+          this.$message({
+            type: 'warning',
+            message: '请输入真实姓名!'
+          })
+          return
+        }
+        if (!this.validIdNo(this.currentIdentityNo)) {
+          this.$message({
+            type: 'warning',
+            message: '请输入正确的身份证号码!'
+          })
+          return
+        }
+        AXIOS.post('/backend/member/identityNo/reset', {
+          memberId: this.currentInfoId,
+          identityNo: this.currentIdentityNo,
+          trueName: this.currentTrueName
+        }).then(res => {
+          this.$message({
+            type: 'success',
+            message: '真实信息修改成功!'
+          })
+          this.info.trueName = this.currentTrueName
+          this.info.identityNo = this.currentIdentityNo
+          this.resetIdVisible = false
+          this.getList()
+        })
+      },
+
       openInviteListDialog(id) {
         AXIOS.post('/backend/member/inviteList', {
           memberId: id,
@@ -478,7 +562,6 @@
         })
       },
 
-
       doSearch() {
         this.showPagination = false
         setTimeout(() => {
@@ -495,7 +578,7 @@
         }, 10)
         this.listQuery = {
           page: 0,
-          size: 10,
+          size: 10
         }
         this.getList()
       },
@@ -519,7 +602,7 @@
       handleCurrentChange(val) {
         this.listQuery.page = val - 1
         this.getList()
-      },
+      }
     }
   }
 </script>
@@ -529,6 +612,7 @@
   .spe {
     display: flex;
     align-items: center;
+
     .svg-icon {
       color: #fff;
       background: green;

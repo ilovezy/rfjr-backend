@@ -51,7 +51,7 @@
         <el-table-column
           prop='name'
           label="昵称"
-          width='160'>
+          width='120'>
         </el-table-column>
 
         <el-table-column
@@ -59,6 +59,12 @@
           label="真实姓名"
           width='120'>
         </el-table-column>
+
+        <el-table-column
+          prop='cardNumber'
+          label="卡号" width='220'>
+        </el-table-column>
+
         <el-table-column
           prop='amount'
           label="提现金额($)"
